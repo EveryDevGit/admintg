@@ -1,7 +1,7 @@
 import telebot
 import random
 
-API_TOKEN = 'API_TOKEN'
+API_TOKEN = ''
 
 bot = telebot.TeleBot(API_TOKEN)
 
@@ -18,6 +18,14 @@ hug_gifs = [
     'https://pa1.narvii.com/6998/4f34261cb5c67c599cce8166e5396507c7a3cd5dr1-540-304_hq.gif',
     'https://i.gifer.com/Lt64.gif',
 ]
+
+attack_gifs = [
+    'https://img10.reactor.cc/pics/comment/ToAru-Anime-%D0%91%D0%91%D0%9F%D0%95-Anime-%D0%93%D0%B8%D1%84%D0%BA%D0%B8-1237956.gif',
+    'https://i.gifer.com/80kI.gif',
+    'https://i.gifer.com/VCCJ.gif',
+    'https://pa1.narvii.com/6393/a9913922a762646695981a3b6c991aca7585f85b_hq.gif',
+]
+
 
 # Handle '/start' and '/help'
 @bot.message_handler(commands=['help', 'start'])
@@ -38,7 +46,7 @@ def commandHandler(message):
             bot.send_animation(message.chat.id, 
             random.choice(kiss_gifs), 
             reply_to_message_id=message.message_id,
-            caption=f'[{message.from_user.full_name}](tg://user?id={message.from_user.id}) поцеловал [{full_name}](tg://user?id={forward_from.id if forward_from else message.reply_to_message.from_user.id})', 
+            caption=f'👄 | [{message.from_user.full_name}](tg://user?id={message.from_user.id}) поцеловал [{full_name}](tg://user?id={forward_from.id if forward_from else message.reply_to_message.from_user.id})', 
             parse_mode="Markdown")
         else:
             bot.reply_to(message, 'Нужен ответ на сообщение')
@@ -50,7 +58,20 @@ def commandHandler(message):
             bot.send_animation(message.chat.id, 
             random.choice(hug_gifs), 
             reply_to_message_id=message.message_id,
-            caption=f'[{message.from_user.full_name}](tg://user?id={message.from_user.id}) обнял [{full_name}](tg://user?id={forward_from.id if forward_from else message.reply_to_message.from_user.id})', 
+            caption=f'👻 | [{message.from_user.full_name}](tg://user?id={message.from_user.id}) обнял [{full_name}](tg://user?id={forward_from.id if forward_from else message.reply_to_message.from_user.id})', 
+            parse_mode="Markdown")
+        else:
+            bot.reply_to(message, 'Нужен ответ на сообщение')
+
+    elif "ударить" in message.text.lower():
+        if message.reply_to_message:
+            forward_from = message.reply_to_message.forward_from
+            full_name = forward_from.full_name if forward_from else message.reply_to_message.from_user.full_name
+
+            bot.send_animation(message.chat.id, 
+            random.choice(attack_gifs), 
+            reply_to_message_id=message.message_id,
+            caption=f'🤕 | [{message.from_user.full_name}](tg://user?id={message.from_user.id}) ударил [{full_name}](tg://user?id={forward_from.id if forward_from else message.reply_to_message.from_user.id})', 
             parse_mode="Markdown")
         else:
             bot.reply_to(message, 'Нужен ответ на сообщение')
